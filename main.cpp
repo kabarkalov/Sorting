@@ -1,11 +1,26 @@
 #include <stdio.h>
 
-void quicksort(int *mas, int first, int last)
+void CountSort(int* mas, int size, int *counter, int max)
+{
+	int i, j, k;
+	for (i = 0; i <= max; i++)
+		counter[i] = 0;
+
+	for (i = 0; i < size; i++)
+		counter[mas[i]]++;
+
+	k = 0;
+	for (int i = 0; i <= max; i++)
+		for (int j = 0; j<counter[i];j++)
+			mas[k++] = i;
+}
+
+void QuickSort(int *mas, int first, int last)
 {
 	int mid, count;
 	int f = first, l = last;
 	mid = mas[(f + l) / 2]; //вычисление опорного элемента
-	do
+	while (f<l)
 	{
 		while (mas[f]<mid) f++;
 		while (mas[l]>mid) l--;
@@ -17,9 +32,9 @@ void quicksort(int *mas, int first, int last)
 			f++;
 			l--;
 		}
-	} while (f<l);
-	if (first<l) quicksort(mas, first, l);
-	if (f<last) quicksort(mas, f, last);
+	} 
+	if (first<l) QuickSort(mas, first, l);
+	if (f<last) QuickSort(mas, f, last);
 }
 
 
@@ -74,8 +89,10 @@ void MergeSort(int* B, int* C, int Start, int End)
 void main()
 {
 	const int size = 10;
-	int mas[size] = { 9,8,7,6,5,4,23,2,1,5};
+	const int MaxElem = 100;
+	int mas[size] = { 1,1,7,6,5,5,23,2,1,5};
 	int buffer[size];
+	int counter[MaxElem+1];
 
 	for (int i = 0; i < size; i++)
 	{
@@ -83,8 +100,9 @@ void main()
 	}
 	printf("\n");
 
-//	quicksort(mas, 0, size - 1);
-	MergeSort(mas,buffer, 0, size - 1);
+//	QuickSort(mas, 0, size - 1);
+//	MergeSort(mas,buffer, 0, size - 1);
+	CountSort(mas,size, counter, MaxElem);
 
 
 	for (int i = 0; i < size; i++)
