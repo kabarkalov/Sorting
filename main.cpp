@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void CountSort(int* mas, int size, int *counter, int max)
 {
@@ -88,21 +89,23 @@ void MergeSort(int* B, int* C, int Start, int End)
 
 void main()
 {
-	const int size = 10;
-	const int MaxElem = 100;
-	int mas[size] = { 1,1,7,6,5,5,23,2,1,5};
-	int buffer[size];
-	int counter[MaxElem+1];
+	int size = 20;
+	int MaxElem = 100;
+	int *mas = (int*)malloc(size*sizeof(int));
+	int *buffer=(int*)malloc(size*sizeof(int));
+	int *counter=(int*)malloc((MaxElem+1)*sizeof(int));
+
 
 	for (int i = 0; i < size; i++)
 	{
+		mas[i] = size - i;
 		printf("%i ", mas[i]);
 	}
 	printf("\n");
 
 //	QuickSort(mas, 0, size - 1);
-//	MergeSort(mas,buffer, 0, size - 1);
-	CountSort(mas,size, counter, MaxElem);
+	MergeSort(mas,buffer, 0, size - 1);
+//	CountSort(mas,size, counter, MaxElem);
 
 
 	for (int i = 0; i < size; i++)
@@ -110,5 +113,9 @@ void main()
 		printf("%i ", mas[i]);
 	}
 	printf("\n");
+
+	free(mas);
+	free(buffer);
+	free(counter);
 
 }
